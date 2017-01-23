@@ -1,4 +1,4 @@
-var liste=[[1,"MULOT Cyrille",3],
+var liste=[[1,"MULOT Cyrille",3], //Variable liste 1
 [2,"AMIOT Antoine",2],
 [3,"BRUNET Xavier",36],
 [4,"FONTENAY Karine",1],
@@ -67,7 +67,7 @@ var liste=[[1,"MULOT Cyrille",3],
 [67,"BROSSARD Remy",13],
 [68,"FOUQUET Arnaud",94],
 [69,"ARNAUD Christian",44]];
-var liste2 =[[70,"MOSNIER Bernard",55],
+var liste2 =[[70,"MOSNIER Bernard",55], //Variable liste 2
 [71,"BERGERET Lise",8],
 [72,"BERGERET Christophe",7],
 [73,"LEFEBVRE Michel",91],
@@ -80,16 +80,82 @@ var liste2 =[[70,"MOSNIER Bernard",55],
 [80,"VOLAT Marc",21],
 [81,"BENIGAUD Sylviane",18],
 [82,"LEPAIN Laurent",22]];
-// Haut de tableau = x // Côté de tab = i
+
 var tab = liste.concat(liste2); //Fusion des deux listes
 
-		for(var i=0; i<= tab.length-1; i++){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Haut de tableau = x // Côté de tab = i
+
+function afficherUnTableau(monTableau){
+
+		document.getElementById('classement').innerHTML="";
+		for(var i=0; i<= monTableau.length-1; i++){ //Boucle qui parcours la liste 
 			var lignetab='<tr>'; // On ouvre <tr> (On déclare une nouvelle ligne)
-			for(var x=0; x<= tab[i].length-1; x++){
+			for(var x=0; x<= monTableau[i].length-1; x++){
 				lignetab+='<td>'; // On ouvre <td> (Ajout d'une colonne à ma ligne)
-				lignetab+=tab[i][x]; // Ajout de la valeur à la colonne
+				lignetab+=monTableau[i][x]; // Ajout de la valeur à la colonne
 				lignetab+='</td>'; // On ferme </td>
 			}
 			lignetab+='</tr>'; // On ferme </tr>
 			document.getElementById('classement').innerHTML+=lignetab;
 		}
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////Fonction recherche////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function search(recherche, tableau=tab, type=2){
+	var resultat = new Array;
+
+	if(type!=0&&type!=2&&type!=10&&type!=11){
+		type="";
+	}
+	if (type==10){
+		recherche = recherche.toUpperCase()+ " ";
+		type=1;
+	}
+	if (type==11){
+		recherche = " "+recherche.charAt(0).toUpperCase()+
+		recherche.substring(1).toLowerCase();
+		type=1;
+	}
+
+	for(i=0; i <= tableau.length-1; i++){
+		if(recherche==parseInt(recherche)){ //vérifie si recherche est un entier
+			if(recherche == tableau[i][type]){ //recherche un entier
+				resultat.push(tableau[i]);
+			}
+		}else{
+			if(tableau[i][type].indexOf(recherche)!=-1){ //recherche chaine de caractere
+				resultat.push(tableau[i]);
+			}
+		}
+	}	
+	if(!resultat[0]){
+		resultat = [["",'pas trouvé',""]];
+	}
+
+	afficherUnTableau(resultat);
+
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////Nouvelle fonction//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function clique(){
+	var recherche = document.formulaireRecherche.recherche.value;
+	var type = document.formulaireRecherche.choixType.value;
+	if (type=='dossard'){
+		search(recherche, tab, 2);
+	}else if(type=='nom'){
+		search(recherche, tab, 10);
+	}else if(type=='prenom'){
+		search(recherche, tab, 11);	
+	}else{
+		search(recherche, tab, 0);
+	}
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+afficherUnTableau(tab);	

@@ -12,7 +12,22 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<table class="table table-bordered">
+			<form  name="formulaireRecherche" class="navbar-form" onsubmit="clique(); return false;">
+				<input type="text" name="recherche" class="form-control">
+				<input type="radio" name="choixType" value="Classement" class="radio-inline" checked>
+				<label class="">Classement</label>
+				<input type="radio" name="choixType" value="Dossard" class="radio-inline">
+				<label>Dossard</label>
+				<input type="radio" name="choixType" value="nom" class="radio-inline">
+				<label>NOM</label>
+				<input type="radio" name="choixType" value="prenom" class="radio-inline">
+				<label>Prénom</label>
+				<button type="submit" name="rechercheOk" class="btn btn-danger">
+					<span class="glyphicon glyphicon-search" aria-hidden="true" onclick="return false;"></span>
+					Recherche
+				</button>
+			</form>
+			<table class="table table-bordered col-md-12">
 				<thead>
 					
 				</thead>
